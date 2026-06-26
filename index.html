@@ -694,7 +694,113 @@
     .results-grid    { grid-template-columns: 1fr 1fr; }
     .event-row       { grid-template-columns: 70px 1fr; }
     .event-row-badge { display: none; }
+    .event-row-actions { grid-column: 1 / -1; justify-content: flex-start; padding-top: 2px; }
   }
+
+  /* ── MODAL ── */
+  .reg-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+  }
+  .reg-overlay.active { opacity: 1; pointer-events: all; }
+
+  .reg-modal {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.25rem 2rem 2rem;
+    width: 100%; max-width: 440px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    transform: translateY(20px);
+    transition: transform .25s;
+  }
+  .reg-overlay.active .reg-modal { transform: translateY(0); }
+
+  .reg-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.4rem; color: var(--grey); line-height: 1;
+    padding: 4px 8px; border-radius: 6px;
+    transition: background .15s, color .15s;
+  }
+  .reg-close:hover { background: var(--line); color: var(--ink); }
+
+  .reg-event-tag {
+    display: inline-block;
+    background: var(--tag-bg); color: var(--tag-txt);
+    font-size: 0.72rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 0.75rem;
+  }
+
+  .reg-modal h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.15rem; font-weight: 800;
+    color: var(--ink); margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .reg-field { margin-bottom: 1rem; }
+  .reg-field label {
+    display: block; font-size: 0.8rem; font-weight: 600;
+    color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .reg-field input {
+    width: 100%;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; color: var(--ink);
+    outline: none;
+    transition: border-color .15s;
+  }
+  .reg-field input:focus { border-color: var(--green); }
+  .reg-field input.error { border-color: #e53e3e; }
+  .reg-hint { font-size: 0.72rem; color: #e53e3e; margin-top: 4px; display: none; }
+  .reg-hint.show { display: block; }
+
+  .reg-submit {
+    width: 100%; margin-top: 0.5rem;
+    background: var(--green); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 13px; font-family: 'Inter', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .reg-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  .reg-success { text-align: center; padding: 0.5rem 0; }
+  .reg-success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--tag-bg); color: var(--green);
+    font-size: 1.8rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+  .reg-success h3 {
+    font-family: 'Unbounded', sans-serif; font-size: 1.1rem;
+    font-weight: 800; color: var(--ink); margin-bottom: 0.5rem;
+  }
+  .reg-success p { font-size: 0.88rem; color: var(--grey); margin-bottom: 1.5rem; line-height: 1.6; }
+
+  .event-row-actions { display: flex; align-items: center; gap: 10px; }
+  .btn-signup {
+    background: var(--green); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 7px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; white-space: nowrap;
+    transition: background .2s, transform .15s;
+  }
+  .btn-signup:hover { background: var(--green-mid); transform: translateY(-1px); }
 </style>
 </head>
 <body>
@@ -709,7 +815,7 @@
     <li><a href="#team">Команда</a></li>
     <li><a href="#partners">Партнёры</a></li>
   </ul>
-  <a href="#events" class="nav-btn">Записаться</a>
+  <button onclick="openModal()" class="nav-btn" style="border:none;cursor:pointer;">Записаться</button>
 </nav>
 
 <!-- HERO -->
@@ -888,7 +994,10 @@
         <h4>Открытый концерт «Краски лета»</h4>
         <p>Живая музыка во дворе Курского колледжа культуры · вход свободный</p>
       </div>
-      <span class="event-row-badge badge-free">Бесплатно</span>
+      <div class="event-row-actions">
+        <span class="event-row-badge badge-free">Бесплатно</span>
+        <button class="btn-signup" onclick="openModal('Открытый концерт «Краски лета»', '14 июля 2027, 18:00')">Записаться</button>
+      </div>
     </div>
     <div class="event-row">
       <div class="event-row-date">20 ИЮЛ<span>2027, 15:00</span></div>
@@ -896,7 +1005,10 @@
         <h4>Мастер-класс по граффити и стрит-арту</h4>
         <p>Практический воркшоп с Курским художником · Площадка «Поток»</p>
       </div>
-      <span class="event-row-badge badge-soon">Скоро</span>
+      <div class="event-row-actions">
+        <span class="event-row-badge badge-soon">Скоро</span>
+        <button class="btn-signup" onclick="openModal('Мастер-класс по граффити и стрит-арту', '20 июля 2027, 15:00')">Записаться</button>
+      </div>
     </div>
     <div class="event-row">
       <div class="event-row-date">28 ИЮЛ<span>2027, 17:00</span></div>
@@ -904,7 +1016,10 @@
         <h4>Открытый микрофон — «Говорю сам»</h4>
         <p>5 минут сцены для всех желающих · любой жанр · арт-пространство «Луна»</p>
       </div>
-      <span class="event-row-badge badge-free">Бесплатно</span>
+      <div class="event-row-actions">
+        <span class="event-row-badge badge-free">Бесплатно</span>
+        <button class="btn-signup" onclick="openModal('Открытый микрофон — «Говорю сам»', '28 июля 2027, 17:00')">Записаться</button>
+      </div>
     </div>
     <div class="event-row">
       <div class="event-row-date">3 АВГ<span>2027, 14:00</span></div>
@@ -912,7 +1027,10 @@
         <h4>Молодёжный театральный фестиваль</h4>
         <p>Короткие постановки от 6 студенческих команд · Актовый зал колледжа</p>
       </div>
-      <span class="event-row-badge badge-open">Регистрация открыта</span>
+      <div class="event-row-actions">
+        <span class="event-row-badge badge-open">Регистрация открыта</span>
+        <button class="btn-signup" onclick="openModal('Молодёжный театральный фестиваль', '3 августа 2027, 14:00')">Записаться</button>
+      </div>
     </div>
     <div class="event-row">
       <div class="event-row-date">15 АВГ<span>2027, 16:00</span></div>
@@ -920,7 +1038,10 @@
         <h4>Городской фестиваль «ЯркоМест Фест»</h4>
         <p>Главное событие сезона — сцена, маркет, мастер-классы и призы · Центральный парк</p>
       </div>
-      <span class="event-row-badge badge-soon">Гвоздь сезона</span>
+      <div class="event-row-actions">
+        <span class="event-row-badge badge-soon">Гвоздь сезона</span>
+        <button class="btn-signup" onclick="openModal('Городской фестиваль «ЯркоМест Фест»', '15 августа 2027, 16:00')">Записаться</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1030,6 +1151,130 @@
     <a href="#team">Команда</a>
   </div>
 </footer>
+
+<!-- MODAL -->
+<div id="reg-overlay" class="reg-overlay" role="dialog" aria-modal="true" aria-labelledby="reg-title">
+  <div class="reg-modal">
+    <button class="reg-close" id="reg-close" aria-label="Закрыть">&times;</button>
+
+    <div id="reg-form-wrap">
+      <span class="reg-event-tag" id="reg-event-tag"></span>
+      <h2 id="reg-title">Записаться на мероприятие</h2>
+      <form id="reg-form" novalidate>
+        <div class="reg-field">
+          <label for="reg-name">Имя и фамилия *</label>
+          <input type="text" id="reg-name" placeholder="Иван Иванов" autocomplete="name">
+          <div class="reg-hint" id="hint-name">Введите ваше имя</div>
+        </div>
+        <div class="reg-field">
+          <label for="reg-email">Email *</label>
+          <input type="email" id="reg-email" placeholder="example@mail.ru" autocomplete="email">
+          <div class="reg-hint" id="hint-email">Введите корректный email</div>
+        </div>
+        <div class="reg-field">
+          <label for="reg-phone">Телефон <span style="color:var(--grey);font-weight:400">(необязательно)</span></label>
+          <input type="tel" id="reg-phone" placeholder="+7 (900) 000-00-00" autocomplete="tel">
+        </div>
+        <button type="submit" class="reg-submit">Подтвердить запись</button>
+      </form>
+    </div>
+
+    <div id="reg-success" class="reg-success" hidden>
+      <div class="reg-success-icon">✓</div>
+      <h3>Вы записаны!</h3>
+      <p id="reg-success-text"></p>
+      <button class="reg-submit" id="reg-done">Отлично</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const overlay   = document.getElementById('reg-overlay');
+const closeBtn  = document.getElementById('reg-close');
+const doneBtn   = document.getElementById('reg-done');
+const formWrap  = document.getElementById('reg-form-wrap');
+const successEl = document.getElementById('reg-success');
+const form      = document.getElementById('reg-form');
+const nameEl    = document.getElementById('reg-name');
+const emailEl   = document.getElementById('reg-email');
+const phoneEl   = document.getElementById('reg-phone');
+const titleEl   = document.getElementById('reg-title');
+const tagEl     = document.getElementById('reg-event-tag');
+const successTxt= document.getElementById('reg-success-text');
+
+let currentEvent = '';
+
+function openModal(eventName, eventDate) {
+  currentEvent = eventName || '';
+  if (eventName) {
+    tagEl.textContent = eventDate;
+    tagEl.style.display = 'inline-block';
+    titleEl.textContent = eventName;
+  } else {
+    tagEl.style.display = 'none';
+    titleEl.textContent = 'Записаться на мероприятие';
+  }
+  formWrap.hidden = false;
+  successEl.hidden = true;
+  form.reset();
+  clearErrors();
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden', 'false');
+  nameEl.focus();
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden', 'true');
+}
+
+function clearErrors() {
+  document.querySelectorAll('.reg-field input').forEach(i => i.classList.remove('error'));
+  document.querySelectorAll('.reg-hint').forEach(h => h.classList.remove('show'));
+}
+
+function validateEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+}
+
+closeBtn.addEventListener('click', closeModal);
+doneBtn.addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  clearErrors();
+  let ok = true;
+
+  if (!nameEl.value.trim()) {
+    nameEl.classList.add('error');
+    document.getElementById('hint-name').classList.add('show');
+    ok = false;
+  }
+  if (!validateEmail(emailEl.value)) {
+    emailEl.classList.add('error');
+    document.getElementById('hint-email').classList.add('show');
+    ok = false;
+  }
+  if (!ok) return;
+
+  const entry = {
+    event: currentEvent || 'Без конкретного мероприятия',
+    name: nameEl.value.trim(),
+    email: emailEl.value.trim(),
+    phone: phoneEl.value.trim(),
+    date: new Date().toLocaleString('ru-RU')
+  };
+  const saved = JSON.parse(localStorage.getItem('ym_registrations') || '[]');
+  saved.push(entry);
+  localStorage.setItem('ym_registrations', JSON.stringify(saved));
+
+  successTxt.textContent = `Ждём вас на мероприятии «${entry.event}». Подробности отправим на ${entry.email}.`;
+  formWrap.hidden = true;
+  successEl.hidden = false;
+});
+</script>
 
 </body>
 </html>
