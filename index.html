@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЯркоМест — молодёжный культурный центр</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:     #1DB954;
+    --green-mid: #17A347;
+    --green-dark:#0E6E30;
+    --ink:       #0D1117;
+    --ink-soft:  #3B4451;
+    --grey:      #8B949E;
+    --line:      #E6EAF0;
+    --bg:        #FFFFFF;
+    --bg-off:    #F4F8F4;
+    --tag-bg:    #E8F8EE;
+    --tag-txt:   #0E6E30;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 68px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--green); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+
+  .nav-btn {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+  }
+  .nav-btn:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 5% 60px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  /* Signature element: big diagonal green stripe in background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -8%;
+    width: 55%;
+    height: 130%;
+    background: linear-gradient(145deg, #E8F8EE 0%, #C8F0D8 60%, #A8E8C0 100%);
+    border-radius: 40% 0 0 40%;
+    z-index: 0;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--tag-bg);
+    color: var(--tag-txt);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: '●'; font-size: 0.5rem; color: var(--green); }
+
+  .hero-title {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title .accent { color: var(--green); }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--green);
+    color: #fff;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--green-mid);
+    border-color: var(--green-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(29,185,84,0.3);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--green); transform: translateY(-2px); }
+
+  /* Hero stats */
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .stat-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--ink);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--grey);
+    font-weight: 500;
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* Hero visual card */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .event-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--line);
+    transition: transform .2s;
+  }
+  .event-card:hover { transform: translateY(-3px); }
+
+  .event-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .event-icon.green { background: var(--tag-bg); }
+  .event-icon.blue  { background: #E8F0FF; }
+  .event-icon.yellow{ background: #FFF8E1; }
+
+  .event-info h4 {
+    font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 2px;
+  }
+  .event-info p {
+    font-size: 0.78rem; color: var(--grey);
+  }
+  .event-date {
+    margin-left: auto;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--tag-bg);
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  /* ── ABOUT ── */
+  section { padding: 100px 5%; }
+
+  .section-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  /* About grid */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .feature-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .feature-item h4 {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .feature-item p { font-size: 0.875rem; color: var(--grey); }
+
+  /* About image side */
+  .about-visual {
+    background: linear-gradient(135deg, #1DB954 0%, #0E6E30 100%);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-visual::after {
+    content: 'ЯМ';
+    position: absolute;
+    bottom: -20px; right: -10px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .about-visual h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .about-visual p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .about-quote {
+    border-left: 3px solid rgba(255,255,255,0.4);
+    padding-left: 1rem;
+    font-style: italic;
+    font-size: 0.88rem;
+    opacity: 0.9;
+  }
+
+  /* ── DIRECTIONS ── */
+  .directions-section {
+    background: var(--bg-off);
+  }
+
+  .directions-header {
+    max-width: 1200px;
+    margin: 0 auto 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .directions-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .dir-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid var(--line);
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .dir-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+
+  .dir-emoji {
+    font-size: 2.2rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .dir-card h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .dir-card p {
+    font-size: 0.875rem;
+    color: var(--grey);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+  .dir-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-txt);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  /* Highlight card */
+  .dir-card.highlight {
+    background: linear-gradient(135deg, #1DB954, #0E6E30);
+    border-color: transparent;
+    color: #fff;
+  }
+  .dir-card.highlight h3 { color: #fff; }
+  .dir-card.highlight p { color: rgba(255,255,255,0.8); }
+  .dir-card.highlight .dir-tag {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+
+  /* ── EVENTS ── */
+  .events-header {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+  }
+
+  .events-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .event-row {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    transition: background .15s;
+    cursor: default;
+  }
+  .event-row:last-child { border-bottom: none; }
+  .event-row:hover { background: var(--bg-off); }
+
+  .event-row-date {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.3;
+  }
+  .event-row-date span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.72rem;
+    color: var(--grey);
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+
+  .event-row-info h4 {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .event-row-info p {
+    font-size: 0.82rem;
+    color: var(--grey);
+  }
+
+  .event-row-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .badge-free  { background: var(--tag-bg); color: var(--tag-txt); }
+  .badge-soon  { background: #E8F0FF; color: #1a4fd6; }
+  .badge-open  { background: #FFF3CD; color: #856404; }
+
+  /* ── TEAM ── */
+  .team-section { background: var(--bg-off); }
+
+  .team-header {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+  }
+
+  .team-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .team-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid var(--line);
+    text-align: center;
+    transition: transform .2s;
+  }
+  .team-card:hover { transform: translateY(-4px); }
+
+  .team-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  .team-avatar.g1 { background: #E8F8EE; }
+  .team-avatar.g2 { background: #E8F0FF; }
+  .team-avatar.g3 { background: #FFF3CD; }
+  .team-avatar.g4 { background: #FFE8E8; }
+
+  .team-card h4 {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .team-card .role {
+    font-size: 0.8rem;
+    color: var(--green);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .team-card p {
+    font-size: 0.8rem;
+    color: var(--grey);
+    line-height: 1.6;
+  }
+
+  /* ── RESULTS ── */
+  .results-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .results-header { margin-bottom: 3.5rem; }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .result-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color .2s, transform .2s;
+  }
+  .result-card:hover { border-color: var(--green); transform: translateY(-3px); }
+
+  .result-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--green);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .result-label {
+    font-size: 0.85rem;
+    color: var(--grey);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ── PARTNERS ── */
+  .partners-section { background: var(--bg-off); }
+
+  .partners-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .partners-header { margin-bottom: 3rem; }
+
+  .partners-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .partner-chip {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: border-color .2s, transform .15s;
+  }
+  .partner-chip:hover { border-color: var(--green); transform: translateY(-2px); }
+  .partner-chip .picon { font-size: 1.4rem; }
+  .partner-chip h5 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .partner-chip p  { font-size: 0.75rem; color: var(--grey); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
+    padding: 3rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #fff;
+  }
+  .footer-logo span { color: var(--green); }
+
+  footer p { font-size: 0.8rem; }
+
+  footer a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color .2s;
+  }
+  footer a:hover { color: var(--green); }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-inner    { grid-template-columns: 1fr; }
+    .hero::before  { display: none; }
+    .hero-visual   { display: none; }
+    .about-grid    { grid-template-columns: 1fr; }
+    .directions-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid     { grid-template-columns: 1fr 1fr; }
+    .results-grid  { grid-template-columns: 1fr 1fr; }
+    .nav-links     { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .directions-grid { grid-template-columns: 1fr; }
+    .team-grid       { grid-template-columns: 1fr 1fr; }
+    .results-grid    { grid-template-columns: 1fr 1fr; }
+    .event-row       { grid-template-columns: 70px 1fr; }
+    .event-row-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ярко<span>Мест</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">О центре</a></li>
+    <li><a href="#directions">Направления</a></li>
+    <li><a href="#events">Мероприятия</a></li>
+    <li><a href="#team">Команда</a></li>
+    <li><a href="#partners">Партнёры</a></li>
+  </ul>
+  <a href="#events" class="nav-btn">Записаться</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag">Молодёжный культурный центр · Курск</div>
+      <h1 class="hero-title">
+        Место, где<br>молодёжь<br><span class="accent">создаёт</span> культуру
+      </h1>
+      <p class="hero-sub">
+        Концерты, фестивали, мастер-классы и живое общение.
+        ЯркоМест — пространство для тех, кто хочет творить,
+        находить единомышленников и менять город к лучшему.
+      </p>
+      <div class="hero-actions">
+        <a href="#events" class="btn-primary">Афиша мероприятий</a>
+        <a href="#about" class="btn-ghost">Узнать о центре</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="stat-num">25</span>
+          <span class="stat-label">мероприятий в год</span>
+        </div>
+        <div>
+          <span class="stat-num">1 000</span>
+          <span class="stat-label">участников</span>
+        </div>
+        <div>
+          <span class="stat-num">3</span>
+          <span class="stat-label">партнёра</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative event cards -->
+    <div class="hero-visual">
+      <div class="event-card">
+        <div class="event-icon green">🎸</div>
+        <div class="event-info">
+          <h4>Открытый концерт во дворе</h4>
+          <p>Живая музыка · Центральный парк</p>
+        </div>
+        <span class="event-date">14 июл</span>
+      </div>
+      <div class="event-card">
+        <div class="event-icon blue">🎨</div>
+        <div class="event-info">
+          <h4>Мастер-класс по граффити</h4>
+          <p>Street Art · Курский колледж</p>
+        </div>
+        <span class="event-date">20 июл</span>
+      </div>
+      <div class="event-card">
+        <div class="event-icon yellow">🎭</div>
+        <div class="event-info">
+          <h4>Молодёжный театральный фестиваль</h4>
+          <p>Постановки · Актовый зал</p>
+        </div>
+        <span class="event-date">3 авг</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-eyebrow">О проекте</div>
+      <h2 class="section-title">Зачем нужен молодёжный центр?</h2>
+      <p class="section-sub">
+        В современном городе молодёжи нужно «третье место» — не дом и не учёба,
+        а пространство для живого творчества, общения и роста. ЯркоМест
+        создаёт именно его.
+      </p>
+      <div class="about-features">
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <h4>Снятие стресса через творчество</h4>
+            <p>Концерты, арт-занятия и фестивали помогают отвлечься и зарядиться энергией</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <h4>Поиск единомышленников</h4>
+            <p>Все мероприятия — это повод познакомиться с людьми с похожими интересами</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <h4>Развитие навыков и таланта</h4>
+            <p>Мастер-классы от профессионалов, выступления и командные проекты</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <h3>ЯркоМест — это про людей, а не про стены</h3>
+      <p>
+        Мы объединяем студентов, активистов, музыкантов и художников Курска.
+        Каждое мероприятие создаётся самими участниками — мы только даём сцену,
+        материалы и поддержку.
+      </p>
+      <div class="about-quote">
+        «Культуру не потребляют — её создают. Приходи и создавай вместе с нами.»
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIRECTIONS -->
+<section id="directions" class="directions-section">
+  <div class="directions-header">
+    <div>
+      <div class="section-eyebrow">Направления</div>
+      <h2 class="section-title">Чем занимается центр</h2>
+    </div>
+    <p style="color:var(--grey);font-size:0.9rem;max-width:360px;">
+      Шесть форматов, которые охватывают всё — от живой музыки до волонтёрства
+    </p>
+  </div>
+  <div class="directions-grid">
+    <div class="dir-card highlight">
+      <span class="dir-emoji">🎸</span>
+      <h3>Музыка и концерты</h3>
+      <p>Открытые сцены, репетиции, джем-сейшны и фестивали живой музыки для всех жанров</p>
+      <span class="dir-tag">Флагман</span>
+    </div>
+    <div class="dir-card">
+      <span class="dir-emoji">🎭</span>
+      <h3>Театр и перформанс</h3>
+      <p>Молодёжные постановки, импров-клуб, уличный театр и фестиваль короткометражных спектаклей</p>
+      <span class="dir-tag">Ежемесячно</span>
+    </div>
+    <div class="dir-card">
+      <span class="dir-emoji">🎨</span>
+      <h3>Визуальное искусство</h3>
+      <p>Мастер-классы по рисунку, граффити, фотографии и дизайну от практикующих художников</p>
+      <span class="dir-tag">Еженедельно</span>
+    </div>
+    <div class="dir-card">
+      <span class="dir-emoji">🎬</span>
+      <h3>Видео и медиа</h3>
+      <p>Съёмка роликов, монтаж, ведение соцсетей и создание контента для городских проектов</p>
+      <span class="dir-tag">Мастер-классы</span>
+    </div>
+    <div class="dir-card">
+      <span class="dir-emoji">🌱</span>
+      <h3>Волонтёрство</h3>
+      <p>Городские акции, помощь в организации мероприятий и участие в социальных проектах Курска</p>
+      <span class="dir-tag">Открытый набор</span>
+    </div>
+    <div class="dir-card">
+      <span class="dir-emoji">🎤</span>
+      <h3>Стенд-ап и разговорный жанр</h3>
+      <p>Открытые микрофоны, дискуссии, публичные выступления и развитие ораторских навыков</p>
+      <span class="dir-tag">Новое</span>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="events-header">
+    <div class="section-eyebrow">Афиша</div>
+    <h2 class="section-title">Ближайшие мероприятия</h2>
+  </div>
+  <div class="events-list" style="max-width:1200px;margin:0 auto;">
+    <div class="event-row">
+      <div class="event-row-date">14 ИЮЛ<span>2027, 18:00</span></div>
+      <div class="event-row-info">
+        <h4>Открытый концерт «Краски лета»</h4>
+        <p>Живая музыка во дворе Курского колледжа культуры · вход свободный</p>
+      </div>
+      <span class="event-row-badge badge-free">Бесплатно</span>
+    </div>
+    <div class="event-row">
+      <div class="event-row-date">20 ИЮЛ<span>2027, 15:00</span></div>
+      <div class="event-row-info">
+        <h4>Мастер-класс по граффити и стрит-арту</h4>
+        <p>Практический воркшоп с Курским художником · Площадка «Поток»</p>
+      </div>
+      <span class="event-row-badge badge-soon">Скоро</span>
+    </div>
+    <div class="event-row">
+      <div class="event-row-date">28 ИЮЛ<span>2027, 17:00</span></div>
+      <div class="event-row-info">
+        <h4>Открытый микрофон — «Говорю сам»</h4>
+        <p>5 минут сцены для всех желающих · любой жанр · арт-пространство «Луна»</p>
+      </div>
+      <span class="event-row-badge badge-free">Бесплатно</span>
+    </div>
+    <div class="event-row">
+      <div class="event-row-date">3 АВГ<span>2027, 14:00</span></div>
+      <div class="event-row-info">
+        <h4>Молодёжный театральный фестиваль</h4>
+        <p>Короткие постановки от 6 студенческих команд · Актовый зал колледжа</p>
+      </div>
+      <span class="event-row-badge badge-open">Регистрация открыта</span>
+    </div>
+    <div class="event-row">
+      <div class="event-row-date">15 АВГ<span>2027, 16:00</span></div>
+      <div class="event-row-info">
+        <h4>Городской фестиваль «ЯркоМест Фест»</h4>
+        <p>Главное событие сезона — сцена, маркет, мастер-классы и призы · Центральный парк</p>
+      </div>
+      <span class="event-row-badge badge-soon">Гвоздь сезона</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="team-section">
+  <div class="team-header">
+    <div class="section-eyebrow">Команда</div>
+    <h2 class="section-title">Кто делает ЯркоМест</h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar g1">🎭</div>
+      <h4>Зайчковская Виктория</h4>
+      <div class="role">Руководитель · Сценарист</div>
+      <p>Координирует проект, пишет сценарии мероприятий, отвечает за программу</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar g2">📱</div>
+      <h4>Контент-менеджер</h4>
+      <div class="role">SMM · ВКонтакте</div>
+      <p>Ведёт группу, создаёт контент-план, продвигает мероприятия в соцсетях</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar g3">🎪</div>
+      <h4>Соколова Кристина</h4>
+      <div class="role">Организатор мероприятий</div>
+      <p>Организует офлайн-события для молодёжи и школьников Курска</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar g4">🎬</div>
+      <h4>Крутых Анастасия</h4>
+      <div class="role">Оператор · Монтажёр</div>
+      <p>Выездные съёмки, монтаж роликов, фотоотчёты с мероприятий</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="results-inner">
+    <div class="results-header">
+      <div class="section-eyebrow">Результаты проекта</div>
+      <h2 class="section-title">Что мы планируем достичь</h2>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <span class="result-num">25</span>
+        <span class="result-label">мероприятий за период проекта</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">1 000</span>
+        <span class="result-label">участников мероприятий</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">130</span>
+        <span class="result-label">публикаций в СМИ и соцсетях</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">50К</span>
+        <span class="result-label">просмотров в интернете</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners" class="partners-section">
+  <div class="partners-inner">
+    <div class="partners-header">
+      <div class="section-eyebrow">Партнёры</div>
+      <h2 class="section-title">Кто нас поддерживает</h2>
+    </div>
+    <div class="partners-list">
+      <div class="partner-chip">
+        <span class="picon">🏛️</span>
+        <div>
+          <h5>ОБПОУ «Курский колледж культуры»</h5>
+          <p>Материальная и организационная поддержка</p>
+        </div>
+      </div>
+      <div class="partner-chip">
+        <span class="picon">🏛️</span>
+        <div>
+          <h5>Министерство культуры Курской области</h5>
+          <p>Информационная поддержка и содействие</p>
+        </div>
+      </div>
+      <div class="partner-chip">
+        <span class="picon">🏢</span>
+        <div>
+          <h5>Собственные средства</h5>
+          <p>Аренда и обеспечение площадок</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Ярко<span>Мест</span></div>
+  <p>Учебный проект — Зайчковская Виктория Сергеевна · 2027</p>
+  <div class="footer-links">
+    <a href="#about">О центре</a>
+    <a href="#events">Мероприятия</a>
+    <a href="#team">Команда</a>
+  </div>
+</footer>
+
+</body>
+</html>
