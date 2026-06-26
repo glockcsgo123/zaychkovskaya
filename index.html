@@ -676,25 +676,155 @@
 
   .footer-links { display: flex; gap: 1.5rem; }
 
+  /* ── HAMBURGER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none; cursor: pointer;
+    padding: 6px; border-radius: 8px;
+    transition: background .15s;
+  }
+  .nav-hamburger:hover { background: var(--line); }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--ink); border-radius: 2px;
+    transition: transform .25s, opacity .25s;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 98;
+    background: #fff;
+    display: flex; flex-direction: column;
+    padding: 0 6% 2rem;
+    transform: translateX(100%);
+    transition: transform .28s cubic-bezier(0.4,0,0.2,1);
+    overflow-y: auto;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu-top {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px; border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .mobile-menu-logo {
+    font-family: 'Unbounded', sans-serif; font-weight: 900;
+    font-size: 1.2rem; color: var(--ink); text-decoration: none;
+  }
+  .mobile-menu-logo span { color: var(--green); }
+  .mobile-menu-close {
+    width: 40px; height: 40px; border: none; background: none;
+    cursor: pointer; font-size: 1.6rem; line-height: 1;
+    color: var(--grey); border-radius: 8px;
+    transition: background .15s;
+  }
+  .mobile-menu-close:hover { background: var(--line); }
+  .mobile-menu-links {
+    display: flex; flex-direction: column;
+    margin-top: 1rem; flex: 1;
+  }
+  .mobile-menu-links a {
+    display: block; padding: 1rem 0;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: color .15s;
+  }
+  .mobile-menu-links a:hover { color: var(--green); }
+  .mobile-menu-cta {
+    margin-top: 2rem;
+    background: var(--green); color: #fff;
+    border: none; border-radius: 12px;
+    padding: 16px; font-family: 'Inter', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    cursor: pointer; width: 100%;
+    transition: background .2s;
+  }
+  .mobile-menu-cta:hover { background: var(--green-mid); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .hero-inner    { grid-template-columns: 1fr; }
-    .hero::before  { display: none; }
-    .hero-visual   { display: none; }
-    .about-grid    { grid-template-columns: 1fr; }
+    .hero-inner      { grid-template-columns: 1fr; }
+    .hero::before    { display: none; }
+    .hero-visual     { display: none; }
+    .about-grid      { grid-template-columns: 1fr; }
     .directions-grid { grid-template-columns: 1fr 1fr; }
-    .team-grid     { grid-template-columns: 1fr 1fr; }
-    .results-grid  { grid-template-columns: 1fr 1fr; }
-    .nav-links     { display: none; }
+    .team-grid       { grid-template-columns: 1fr 1fr; }
+    .results-grid    { grid-template-columns: 1fr 1fr; }
+    .nav-links       { display: none; }
+    .nav-hamburger   { display: flex; }
+    .nav-btn         { display: none; }
   }
 
   @media (max-width: 600px) {
-    .directions-grid { grid-template-columns: 1fr; }
-    .team-grid       { grid-template-columns: 1fr 1fr; }
-    .results-grid    { grid-template-columns: 1fr 1fr; }
-    .event-row       { grid-template-columns: 70px 1fr; }
+    section { padding: 52px 5%; }
+
+    /* Hero */
+    .hero { min-height: auto; padding: 88px 5% 44px; }
+    .hero-tag { font-size: 0.7rem; padding: 5px 12px; margin-bottom: 1rem; }
+    .hero-sub { font-size: 0.92rem; margin-bottom: 1.5rem; }
+    .hero-actions { flex-direction: column; gap: 0.75rem; }
+    .btn-primary, .btn-ghost { width: 100%; text-align: center; padding: 13px 20px; }
+    .hero-stats { gap: 1.25rem; margin-top: 1.75rem; padding-top: 1.5rem; }
+    .stat-num { font-size: 1.4rem; }
+    .stat-label { font-size: 0.7rem; }
+
+    /* About */
+    .about-visual { padding: 1.75rem 1.5rem; }
+    .about-visual h3 { font-size: 1.1rem; }
+    .about-visual p { font-size: 0.85rem; margin-bottom: 1.25rem; }
+
+    /* Directions */
+    .directions-header { flex-direction: column; align-items: flex-start; margin-bottom: 1.75rem; }
+    .directions-header > p { display: none; }
+    .directions-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .dir-card { padding: 1.5rem; }
+    .dir-card p { margin-bottom: 1rem; }
+
+    /* Events */
+    .event-row {
+      grid-template-columns: 56px 1fr;
+      grid-template-rows: auto auto;
+      align-items: start;
+      gap: 2px 10px;
+      padding: 1rem;
+    }
+    .event-row-date { font-size: 0.72rem; }
+    .event-row-date span { display: inline; margin: 0 0 0 4px; font-size: 0.68rem; }
+    .event-row-info h4 { font-size: 0.9rem; }
+    .event-row-info p { font-size: 0.75rem; }
     .event-row-badge { display: none; }
-    .event-row-actions { grid-column: 1 / -1; justify-content: flex-start; padding-top: 2px; }
+    .event-row-actions { grid-column: 2; padding-top: 6px; justify-content: flex-start; }
+    .btn-signup { padding: 7px 14px; font-size: 0.78rem; }
+
+    /* Team */
+    .team-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .team-card { padding: 1.25rem 1rem; }
+    .team-avatar { width: 56px; height: 56px; font-size: 1.4rem; }
+    .team-card h4 { font-size: 0.85rem; }
+    .team-card .role { font-size: 0.72rem; }
+    .team-card p { font-size: 0.75rem; }
+
+    /* Results */
+    .results-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .result-card { padding: 1.25rem 0.75rem; }
+    .result-num { font-size: 1.8rem; }
+    .result-label { font-size: 0.78rem; }
+
+    /* Partners */
+    .partners-list { flex-direction: column; }
+    .partner-chip { width: 100%; }
+
+    /* Footer */
+    footer { flex-direction: column; align-items: flex-start; padding: 2rem 5%; gap: 0.75rem; }
+    .footer-links { flex-wrap: wrap; gap: 1rem; }
   }
 
   /* ── MODAL ── */
@@ -801,6 +931,18 @@
     transition: background .2s, transform .15s;
   }
   .btn-signup:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  @media (max-width: 600px) {
+    .reg-overlay { align-items: flex-end; padding: 0; }
+    .reg-modal {
+      border-radius: 20px 20px 0 0;
+      max-width: 100%;
+      padding: 1.5rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .reg-field input { font-size: 16px; }
+  }
 </style>
 </head>
 <body>
@@ -816,7 +958,26 @@
     <li><a href="#partners">Партнёры</a></li>
   </ul>
   <button onclick="openModal()" class="nav-btn" style="border:none;cursor:pointer;">Записаться</button>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Открыть меню" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-top">
+    <a href="#" class="mobile-menu-logo" onclick="toggleMenu()">Ярко<span>Мест</span></a>
+    <button class="mobile-menu-close" onclick="toggleMenu()" aria-label="Закрыть меню">&times;</button>
+  </div>
+  <nav class="mobile-menu-links">
+    <a href="#about" onclick="toggleMenu()">О центре</a>
+    <a href="#directions" onclick="toggleMenu()">Направления</a>
+    <a href="#events" onclick="toggleMenu()">Мероприятия</a>
+    <a href="#team" onclick="toggleMenu()">Команда</a>
+    <a href="#partners" onclick="toggleMenu()">Партнёры</a>
+  </nav>
+  <button class="mobile-menu-cta" onclick="toggleMenu(); setTimeout(openModal, 280)">Записаться на мероприятие</button>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1189,6 +1350,17 @@
 </div>
 
 <script>
+// Hamburger menu
+const mobileMenu = document.getElementById('mobile-menu');
+const hamburger  = document.getElementById('nav-hamburger');
+function toggleMenu() {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && mobileMenu.classList.contains('open')) toggleMenu(); });
+
+// Modal
 const overlay   = document.getElementById('reg-overlay');
 const closeBtn  = document.getElementById('reg-close');
 const doneBtn   = document.getElementById('reg-done');
